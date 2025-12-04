@@ -259,7 +259,7 @@ export default function Contact() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl font-bold text-slate-50 md:text-5xl"
+            className="text-3xl font-bold text-slate-50 md:text-5x2"
           >
             Let's build your idea
             <span className="block bg-gradient-to-r from-amber-300 via-orange-300 to-amber-400 bg-clip-text text-transparent">
@@ -461,6 +461,17 @@ export default function Contact() {
                     action="tel:+919825600097"
                     color="from-indigo-400/20 to-purple-400/20"
                   />
+                  <ContactMethod
+                    icon={
+                      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                    }
+                    title="Call Us"
+                    info="+91 7226848695"
+                    action="tel:+917226848695"
+                    color="from-indigo-400/20 to-purple-400/20"
+                  />
                   
                   <ContactMethod
                     icon={
@@ -469,7 +480,7 @@ export default function Contact() {
                       </svg>
                     }
                     title="Response Time"
-                    info="Within 24 hours"
+                    info="Within 24-48 hours"
                     action="#"
                     color="from-emerald-400/20 to-teal-400/20"
                     noLink
@@ -522,7 +533,7 @@ export default function Contact() {
               <div className="space-y-3">
                 <FAQItem 
                   question="What happens after I submit this form?"
-                  answer="We'll review your project details and schedule a free 30-minute discovery call to discuss your vision and next steps."
+                  answer="We'll review your project details and schedule a free 60-minute discovery call to discuss your vision and next steps."
                 />
                 <FAQItem 
                   question="What's your typical project timeline?"

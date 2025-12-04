@@ -445,8 +445,8 @@ export default function Contact() {
                       </svg>
                     }
                     title="Email Us"
-                    info="hello@aangandevelopers.com"
-                    action="mailto:hello@aangandevelopers.com"
+                    info="aangandeveloper@gmail.com"
+                    action="mailto:aangandeveloper@gmail.com"
                     color="from-amber-400/20 to-orange-400/20"
                   />
                   
@@ -457,8 +457,8 @@ export default function Contact() {
                       </svg>
                     }
                     title="Call Us"
-                    info="+91 12345 67890"
-                    action="tel:+911234567890"
+                    info="+91 98256 00097"
+                    action="tel:+919825600097"
                     color="from-indigo-400/20 to-purple-400/20"
                   />
                   
@@ -492,7 +492,7 @@ export default function Contact() {
                 </div>
 
                 {/* Social Links */}
-                <div>
+                {/* <div>
                   <h4 className="text-sm font-semibold text-slate-100 mb-3">Follow Our Work</h4>
                   <div className="flex gap-3">
                     {[
@@ -512,7 +512,7 @@ export default function Contact() {
                       </motion.a>
                     ))}
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
 

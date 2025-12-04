@@ -284,8 +284,8 @@ export default function About() {
                       whileTap={{ scale: 0.95 }}
                     >
                       <span className="flex-shrink-0">{value.icon}</span>
-                      <span className="hidden xs:inline">{value.label}</span>
-                      <span className="xs:hidden">{value.label.split(' ')[0]}</span>
+                      {/* <span className="hidden xs:inline">{value.label}</span> */}
+                      {/* <span className="xs:hidden">{value.label.split(' ')[0]}</span> */}
                     </motion.button>
                   ))}
                 </div>

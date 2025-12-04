@@ -1,180 +1,99 @@
-// import { motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 // const tiers = [
 //   {
 //     name: 'Starter',
 //     subtitle: 'MVP websites & product teasers',
-//     price: 'From $2.5K',
+//     price: '₹2 Lakhs+',
+//     originalPrice: '₹2,50,000',
 //     highlight: 'Best for early validation',
 //     features: [
 //       'Single-page or small multi-page experience',
 //       'Brand-aligned UI & copy support',
 //       'Deployed to Vercel / Netlify',
-//       'Analytics & basic SEO setup'
+//       'Analytics & basic SEO setup',
+//       '1-month post-launch support',
+//       'Mobile responsive design'
 //     ]
 //   },
 //   {
 //     name: 'Growth',
 //     subtitle: 'Business applications & portals',
-//     price: 'From $6K',
+//     price: '₹6 Lakhs+',
+//     originalPrice: '₹6,00,000',
 //     highlight: 'Best for growing teams',
 //     featured: true,
 //     features: [
-//       'Auth, roles & dashboards',
+//       'Authentication & role-based access',
+//       'Dashboard & admin panel',
 //       'API integrations & automation',
 //       'Design system & component library',
-//       'Ongoing iteration windows'
+//       'Ongoing iteration windows',
+//       '3-month support & maintenance'
 //     ]
 //   },
 //   {
 //     name: 'Scale',
 //     subtitle: 'Full SaaS platforms',
-//     price: 'Custom',
+//     price: 'Custom Quote',
+//     originalPrice: 'Starting from ₹15 Lakhs',
 //     highlight: 'Best for venture-backed products',
 //     features: [
 //       'Multi-tenant architecture',
 //       'Usage-based billing & subscriptions',
 //       'Performance & reliability focus',
-//       'Product partnership & roadmap'
+//       'Product partnership & roadmap',
+//       'Dedicated development team',
+//       'Priority support & SLAs'
 //     ]
 //   }
 // ];
 
-// export default function Pricing() {
-//   return (
-//     <section
-//       id="pricing"
-//       className="relative border-t border-white/5 bg-slate-950 py-20"
-//     >
-//       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(15,23,42,0.8),transparent_60%)]" />
-//       <div className="relative mx-auto max-w-6xl px-6">
-//         <motion.div
-//           initial={{ opacity: 0, y: 30 }}
-//           whileInView={{ opacity: 1, y: 0 }}
-//           viewport={{ once: true, amount: 0.4 }}
-//           transition={{ duration: 0.7 }}
-//           className="mx-auto max-w-2xl text-center"
-//         >
-//           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amberSoft">
-//             Pricing
-//           </p>
-//           <h2 className="mt-2 text-2xl font-semibold text-slate-50 md:text-4xl">
-//             Clear, calm, and transparent.
-//           </h2>
-//           <p className="mt-3 text-sm text-slate-300 md:text-base">
-//             Every project starts with a shared courtyard — a structured discovery
-//             session — then we tailor scope and investment together.
-//           </p>
-//         </motion.div>
-
-//         <div className="mt-10 grid gap-6 md:grid-cols-3">
-//           {tiers.map((tier, index) => (
-//             <motion.article
-//               key={tier.name}
-//               initial={{ opacity: 0, y: 40 }}
-//               whileInView={{ opacity: 1, y: 0 }}
-//               viewport={{ once: true, amount: 0.3 }}
-//               transition={{ duration: 0.6, delay: index * 0.08 }}
-//               whileHover={{ y: -10, scale: 1.02 }}
-//               className={`glass relative flex flex-col rounded-3xl border bg-slate-900/70 p-5 ${
-//                 tier.featured
-//                   ? 'border-amberSoft/60 shadow-amber-500/40'
-//                   : 'border-white/10'
-//               }`}
-//             >
-//               {tier.featured && (
-//                 <div className="absolute -top-3 right-4 rounded-full bg-amberSoft px-3 py-1 text-[10px] font-semibold text-slate-950 shadow-lg shadow-amber-500/40">
-//                   Most chosen
-//                 </div>
-//               )}
-//               <div className="space-y-2">
-//                 <h3 className="text-lg font-semibold text-slate-50">
-//                   {tier.name}
-//                 </h3>
-//                 <p className="text-xs text-slate-300">{tier.subtitle}</p>
-//                 <p className="text-sm font-semibold text-amberSoft">
-//                   {tier.price}
-//                 </p>
-//                 <p className="text-[11px] text-slate-400">{tier.highlight}</p>
-//               </div>
-
-//               <ul className="mt-5 space-y-2 text-sm text-slate-200">
-//                 {tier.features.map((feature) => (
-//                   <li key={feature} className="flex items-start gap-2">
-//                     <span className="mt-[6px] h-1.5 w-1.5 rounded-full bg-gradient-to-r from-amberSoft to-indigoSoft" />
-//                     <span className="text-xs text-slate-200">{feature}</span>
-//                   </li>
-//                 ))}
-//               </ul>
-
-//               <div className="mt-6">
-//                 <a
-//                   href="#contact"
-//                   className={`inline-flex w-full items-center justify-center rounded-full px-4 py-2 text-xs font-semibold transition ${
-//                     tier.featured
-//                       ? 'bg-amberSoft text-slate-950 shadow-lg shadow-amber-500/40 hover:shadow-amber-500/70'
-//                       : 'border border-white/15 bg-slate-950/40 text-slate-100 hover:border-amberSoft/50 hover:text-amberSoft'
-//                   }`}
-//                 >
-//                   Discuss this tier
-//                 </a>
-//               </div>
-//             </motion.article>
-//           ))}
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
-
-
-import { motion } from 'framer-motion';
-
 const tiers = [
   {
     name: 'Starter',
-    subtitle: 'MVP websites & product teasers',
-    price: '₹2 Lakhs+',
-    originalPrice: '₹2,50,000',
-    highlight: 'Best for early validation',
+    subtitle: 'Small websites & quick launches',
+    price: '₹15,000 -₹25,000',
+    originalPrice: 'Market Price ₹35,000',
+    highlight: 'Best for simple websites',
     features: [
-      'Single-page or small multi-page experience',
-      'Brand-aligned UI & copy support',
-      'Deployed to Vercel / Netlify',
-      'Analytics & basic SEO setup',
-      '1-month post-launch support',
-      'Mobile responsive design'
+      '1–3 page clean website',
+      'Custom UI (no templates)',
+      'Mobile responsive design',
+      'Contact form',
+      'Basic SEO setup',
+      'Deployed to Vercel / Netlify'
     ]
   },
   {
     name: 'Growth',
-    subtitle: 'Business applications & portals',
-    price: '₹6 Lakhs+',
-    originalPrice: '₹6,00,000',
-    highlight: 'Best for growing teams',
+    subtitle: 'Business websites & dashboards',
+    price: '₹50,000 – ₹75,000',
+    originalPrice: 'Market Price ₹1,00,000',
+    highlight: 'Best for growing businesses',
     featured: true,
     features: [
-      'Authentication & role-based access',
-      'Dashboard & admin panel',
-      'API integrations & automation',
-      'Design system & component library',
-      'Ongoing iteration windows',
-      '3-month support & maintenance'
+      'Business website or dashboard',
+      'Authentication & login system',
+      'Admin panel & custom modules',
+      'API integrations (payment, email, etc.)',
+      'Backend setup (Node.js + Database)',
+      '1–2 months post-launch support'
     ]
   },
   {
     name: 'Scale',
-    subtitle: 'Full SaaS platforms',
-    price: 'Custom Quote',
-    originalPrice: 'Starting from ₹15 Lakhs',
-    highlight: 'Best for venture-backed products',
+    subtitle: 'Full SaaS or custom platforms',
+    price: '₹1,00,000 - ₹2,50,000',
+    originalPrice: 'Market Price ₹3,00,000',
+    highlight: 'Best for full product development',
     features: [
-      'Multi-tenant architecture',
-      'Usage-based billing & subscriptions',
-      'Performance & reliability focus',
-      'Product partnership & roadmap',
-      'Dedicated development team',
-      'Priority support & SLAs'
+      'Full backend + multi-user system',
+      'Subscription & payments integration',
+      'High-performance architecture',
+      'Cloud deployment & DevOps',
+      'Long-term product partnership',
+      'Priority support & maintenance'
     ]
   }
 ];
@@ -219,7 +138,7 @@ export default function Pricing() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl font-bold text-slate-50 md:text-5xl"
+            className="text-3xl font-bold text-slate-50 md:text-5x2"
           >
             Clear, calm, and
             <span className="block bg-gradient-to-r from-amber-300 via-orange-300 to-amber-400 bg-clip-text text-transparent">
@@ -386,7 +305,7 @@ export default function Pricing() {
         </div>
 
         {/* Additional Info */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -430,7 +349,7 @@ export default function Pricing() {
               <p className="text-sm text-slate-300">Dedicated support period included with every project</p>
             </div>
           </div>
-        </motion.div>
+        </motion.div> */}
 
         {/* CTA Section */}
         <motion.div

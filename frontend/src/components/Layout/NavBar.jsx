@@ -219,10 +219,10 @@ export default function NavBar() {
               <div className="mt-8 border-t border-slate-800 pt-8">
                 <p className="text-lg text-slate-400 mb-3">Get in touch</p>
                 <a 
-                  href="mailto:contact@aangandevelopers.com" 
+                  href="mailto:support@aangandevelopers.com" 
                   className="text-xl text-amber-400 hover:text-amber-300 transition-colors"
                 >
-                  contact@aangandevelopers.com
+                  support@aangandevelopers.com
                 </a>
               </div>
             </div>

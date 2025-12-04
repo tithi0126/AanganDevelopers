@@ -185,7 +185,7 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl font-bold text-slate-50 md:text-5xl"
+            className="text-3xl font-bold text-slate-50 md:text-5x2"
           >
             Where ideas find their
             <span className="block bg-gradient-to-r from-amber-300 via-orange-300 to-amber-400 bg-clip-text text-transparent">
@@ -222,7 +222,7 @@ export default function About() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.1 + index * 0.1 }}
-                  className="group rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/10 p-4 backdrop-blur-sm transition-all hover:border-amber-400/30"
+                  className="group rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/10 p-4 backdrop-blur-sm transition-all hover:border-amber-400/30 text-center"
                 >
                   <div className="text-2xl font-bold text-amber-300 transition-colors group-hover:text-amber-400">
                     {stat.value}
@@ -231,6 +231,7 @@ export default function About() {
                     {stat.label}
                   </div>
                 </motion.div>
+
               ))}
             </div>
 

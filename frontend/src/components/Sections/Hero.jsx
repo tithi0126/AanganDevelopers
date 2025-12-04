@@ -1,152 +1,3 @@
-// import { motion } from 'framer-motion';
-
-// export default function Hero() {
-//   return (
-//     <section
-//       id="hero"
-//       className="relative flex min-h-screen items-center justify-center overflow-hidden bg-hero-gradient"
-//     >
-//       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(148,163,184,0.15),transparent_60%),radial-gradient(circle_at_bottom,rgba(15,23,42,0.9),#020617)]" />
-
-//       <div className="relative z-10 mx-auto flex max-w-6xl flex-col gap-12 px-6 pt-24 md:flex-row md:items-center">
-//         <div className="flex-1 space-y-6">
-//           <motion.span
-//             initial={{ opacity: 0, y: 10 }}
-//             animate={{ opacity: 1, y: 0 }}
-//             transition={{ delay: 0.1, duration: 0.5 }}
-//             className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-slate-900/60 px-3 py-1 text-xs font-medium text-slate-300 backdrop-blur"
-//           >
-//             Aangan — a courtyard for ideas, collaboration, and growth.
-//           </motion.span>
-
-//           <motion.h1
-//             initial={{ opacity: 0, y: 20 }}
-//             animate={{ opacity: 1, y: 0 }}
-//             transition={{ delay: 0.2, duration: 0.7 }}
-//             className="text-balance text-4xl font-semibold leading-tight tracking-tight text-slate-50 md:text-6xl"
-//           >
-//             Where your idea
-//             <span className="block bg-gradient-to-r from-amberSoft via-rose-300 to-indigoSoft bg-clip-text text-transparent">
-//               finds its home.
-//             </span>
-//           </motion.h1>
-
-//           <motion.p
-//             initial={{ opacity: 0, y: 20 }}
-//             animate={{ opacity: 1, y: 0 }}
-//             transition={{ delay: 0.3, duration: 0.7 }}
-//             className="max-w-xl text-sm leading-relaxed text-slate-300 md:text-base"
-//           >
-//             We are a product-minded software studio crafting thoughtful web, mobile,
-//             and AI-driven experiences. From first spark to scalable platform, we
-//             turn courtyards of ideas into homes your users love to gather in.
-//           </motion.p>
-
-//           <motion.div
-//             initial={{ opacity: 0, y: 20 }}
-//             animate={{ opacity: 1, y: 0 }}
-//             transition={{ delay: 0.4, duration: 0.7 }}
-//             className="flex flex-wrap items-center gap-4"
-//           >
-//             <a
-//               href="#contact"
-//               className="inline-flex items-center justify-center rounded-full bg-amberSoft px-6 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-amber-500/40 transition hover:-translate-y-0.5 hover:shadow-amber-500/70"
-//             >
-//               Start your project
-//             </a>
-//             <a
-//               href="#solutions"
-//               className="inline-flex items-center justify-center rounded-full border border-white/10 bg-slate-950/40 px-6 py-2.5 text-sm font-medium text-slate-100 backdrop-blur transition hover:border-amberSoft/40 hover:text-amberSoft"
-//             >
-//               View our work
-//             </a>
-//           </motion.div>
-
-//           <motion.div
-//             initial={{ opacity: 0, y: 10 }}
-//             animate={{ opacity: 1, y: 0 }}
-//             transition={{ delay: 0.5, duration: 0.7 }}
-//             className="mt-4 flex flex-wrap gap-4 text-xs text-slate-400"
-//           >
-//             <div>
-//               Full-stack partners for{' '}
-//               <span className="font-semibold text-slate-200">
-//                 founders & product teams
-//               </span>
-//             </div>
-//             <div className="flex gap-3">
-//               <span>Web &amp; SaaS</span>
-//               <span>Mobile</span>
-//               <span>AI-native products</span>
-//             </div>
-//           </motion.div>
-//         </div>
-
-//         <motion.div
-//           initial={{ opacity: 0, x: 40 }}
-//           animate={{ opacity: 1, x: 0 }}
-//           transition={{ delay: 0.3, duration: 0.7 }}
-//           className="mt-10 flex-1 md:mt-0"
-//         >
-//           <div className="glass relative overflow-hidden rounded-3xl border border-white/10 bg-slate-900/60 p-5">
-//             <div className="mb-4 flex items-center justify-between text-xs text-slate-400">
-//               <span>Product journey</span>
-//               <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[11px] text-emerald-300">
-//                 End-to-end
-//               </span>
-//             </div>
-
-//             <div className="space-y-3 text-xs text-slate-200">
-//               <JourneyRow
-//                 label="Ideate"
-//                 description="We co-design your courtyard — clarifying vision, users, and outcomes."
-//                 progress={33}
-//               />
-//               <JourneyRow
-//                 label="Build"
-//                 description="Rapid, reliable execution with modern stacks and product thinking."
-//                 progress={66}
-//               />
-//               <JourneyRow
-//                 label="Scale"
-//                 description="Architecture, analytics, and iteration to grow your product home."
-//                 progress={100}
-//               />
-//             </div>
-
-//             <div className="mt-6 flex items-center justify-between text-[11px] text-slate-400">
-//               <span>Designed for calm, confident launches.</span>
-//               <span className="text-slate-300">MERN • React Native • AI</span>
-//             </div>
-//           </div>
-//         </motion.div>
-//       </div>
-//     </section>
-//   );
-// }
-
-// function JourneyRow({ label, description, progress }) {
-//   return (
-//     <div className="space-y-1 rounded-2xl bg-slate-900/80 p-3">
-//       <div className="flex items-center justify-between">
-//         <span className="text-xs font-semibold text-slate-100">{label}</span>
-//         <span className="text-[11px] text-slate-400">{progress}%</span>
-//       </div>
-//       <p className="text-[11px] text-slate-400">{description}</p>
-//       <div className="mt-1 h-1.5 rounded-full bg-slate-800">
-//         <motion.div
-//           initial={{ width: 0 }}
-//           whileInView={{ width: `${progress}%` }}
-//           viewport={{ once: true, amount: 0.4 }}
-//           transition={{ duration: 0.7, ease: 'easeOut' }}
-//           className="h-full rounded-full bg-gradient-to-r from-amberSoft to-indigoSoft"
-//         />
-//       </div>
-//     </div>
-//   );
-// }
-
-
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
@@ -183,7 +34,7 @@ export default function Hero() {
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_70%)]" />
       
       {/* Floating Particles */}
-      <div className="absolute inset-0 overflow-hidden">
+      {/* <div className="absolute inset-0 overflow-hidden">
         {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
@@ -203,7 +54,7 @@ export default function Hero() {
             }}
           />
         ))}
-      </div>
+      </div> */}
 
       <div className="relative z-10 mx-auto flex max-w-6xl flex-col gap-12 px-6 pt-24 md:flex-row md:items-center">
         <div className="flex-1 space-y-8">

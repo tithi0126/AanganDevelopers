@@ -218,7 +218,7 @@ export default function Solutions() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="mb-4 text-3xl font-bold text-slate-50 md:text-5xl"
+            className="mb-4 text-3xl font-bold text-slate-50 md:text-5x2"
           >
             A courtyard of capabilities
             <span className="block bg-gradient-to-r from-amber-300 via-rose-300 to-indigo-300 bg-clip-text text-transparent">

@@ -78,11 +78,11 @@ export default function NavBar() {
                 scale: { delay: 5, duration: 2, repeat: Infinity, repeatDelay: 3 }
               }}
             /> */}
-            <img src="/AanganDevelopers_Logo.png" alt="AanganDevelopers Logo" className="h-10" />
+            <img src="/bcard.png" alt="AanganDevelopers Logo" className="w-36" />
             {/* <div className="flex flex-col text-left"> */}
-              <span className="text-sm font-bold tracking-[0.16em] text-amber-400 transition-all group-hover:text-amber-300">
+              {/* <span className="text-sm font-bold tracking-[0.16em] text-amber-400 transition-all group-hover:text-amber-300">
                 AanganDevelopers
-              </span>
+              </span> */}
               {/* <span className="text-xs text-slate-400 group-hover:text-slate-300 transition-colors">
                 Where your idea finds its home.
               </span> */}

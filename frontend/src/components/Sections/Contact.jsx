@@ -197,7 +197,7 @@ export default function Contact() {
     setStatus({ state: 'loading', message: '' });
     try {
       const res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'}/api/contact`,
+        `${import.meta.env.VITE_API_BASE_URL || 'https://aangandevelopers.com'}/api/contact`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

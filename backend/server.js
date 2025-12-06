@@ -6,14 +6,20 @@ import contactRouter from './src/routes/contact.js';
 
 dotenv.config();
 
+const allowedOrigins = [
+  'http://localhost:5173',  // Local development
+  'https://aangandevelopers.com',  // Your production domain
+  'https://www.aangandevelopers.com'  // Optional: with www
+];
+
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(
-  cors({
-    origin: process.env.CORS_ORIGIN || '*'
-  })
-);
+app.use(cors({
+  origin: ['http://localhost:5173', 'https://aangandevelopers.com'],
+  credentials: true
+}));
+
 app.use(express.json());
 
 app.get('/api/health', (_req, res) => {

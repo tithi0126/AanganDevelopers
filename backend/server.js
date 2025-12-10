@@ -1,6 +1,6 @@
-import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import express from 'express';
 import mongoose from 'mongoose';
 import contactRouter from './src/routes/contact.js';
 
@@ -38,7 +38,7 @@ mongoose
   .connect(mongoUri, { dbName: process.env.MONGODB_DB || 'aangan_developers' })
   .then(() => {
     console.log('Connected to MongoDB');
-    app.listen(port, () => {
+    app.listen(port,'0.0.0.0',() => {
       console.log(`Server listening on port ${port}`);
     });
   })

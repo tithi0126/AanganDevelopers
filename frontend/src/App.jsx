@@ -33,7 +33,7 @@ export default function App() {
         <Solutions />
         <Pricing />
         <About />
-        <Team />
+        {/* <Team /> */}
         <Contact />
         <footer className="border-t border-white/5 bg-slate-950/95 py-6 text-center text-[11px] text-slate-500">
           © {new Date().getFullYear()} AanganDevelopers. Crafted with care in the

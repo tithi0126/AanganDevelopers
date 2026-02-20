@@ -40,27 +40,24 @@ const values = [
     }
 ];
 
-export default function Values() {
-    const containerRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start start", "end end"]
-    });
+// Each card gets 100vh of scroll space; total = (n+1)*100vh so last card can clear
+const CARD_SCROLL_VH = 100;
+const TOP_OFFSET = 100; // px from top where first card sticks
 
+export default function Values() {
     return (
-        <section ref={containerRef} className="relative z-10 bg-site-bg">
-            <div className="mx-auto max-w-6xl px-6 py-32 relative">
-                {/* Decorative Assets */}
+        <section className="relative z-10 bg-site-bg">
+            {/* Header — normal flow above the sticky cards */}
+            <div className="mx-auto max-w-6xl px-6 pt-32 pb-16 relative">
                 <motion.img
                     src="https://cdn.prod.website-files.com/67079a31e71560a787d9fcc4/671f8d4eb9fdc08517312d0c_Static-6-purple.gif"
                     loading="eager"
                     alt=""
-                    className="in2-dec1 absolute left-[-5%] top-20 w-32 h-32 pointer-events-none opacity-40"
+                    className="absolute left-[-5%] top-20 w-32 h-32 pointer-events-none opacity-40"
                     animate={{ rotate: -120, y: [0, -20, 0] }}
                     transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
                 />
-
-                <div className="mb-20 max-w-3xl space-y-6">
+                <div className="mb-4 max-w-3xl space-y-6">
                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-site-fg/40">Our Foundation</p>
                     <MovingText
                         text="What we believe in."
@@ -70,33 +67,64 @@ export default function Values() {
                         delayOffset={0.2}
                     />
                 </div>
-
-                <div className="relative h-[250vh]">
-                    {values.map((value, i) => (
-                        <Card key={i} index={i} total={values.length} value={value} />
-                    ))}
-                </div>
             </div>
+
+            {/* Sticky card stack — one scroll region per card */}
+            <div
+                className="relative"
+                style={{ height: `${(values.length + 1) * CARD_SCROLL_VH}vh` }}
+            >
+                {values.map((value, i) => (
+                    <StickyCard
+                        key={i}
+                        value={value}
+                        index={i}
+                        total={values.length}
+                    />
+                ))}
+            </div>
+
+            {/* Bottom breathing room */}
+            <div className="h-24" />
         </section>
     );
 }
 
-function Card({ value, index, total }) {
+function StickyCard({ value, index, total }) {
+    const ref = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: ref,
+        offset: ['start end', 'end start']
+    });
+
+    // Scale down slightly as next cards stack on top
+    const scale = useTransform(
+        scrollYProgress,
+        [0, 0.5, 1],
+        [0.9, 1, 1 - (total - index) * 0.015]
+    );
+
+    // Each card sticks lower than the previous by 20px
+    const stickyTop = TOP_OFFSET + index * 20;
+
     return (
         <div
-            className="sticky flex h-screen items-center justify-center"
+            ref={ref}
+            className="sticky flex items-center justify-center"
             style={{
-                top: `${80 + (index * 20)}px`,
-                zIndex: index + 1
+                top: `${stickyTop}px`,
+                height: `${CARD_SCROLL_VH}vh`,
+                zIndex: index + 1,
             }}
         >
             <motion.div
-                initial={{ opacity: 0, scale: 0.8, y: 50 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                viewport={{ once: true, margin: "-10%" }}
+                initial={{ opacity: 0, y: 60, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: '-5%' }}
                 style={{
                     rotate: value.rotation,
-                    boxShadow: 'rgba(123, 94, 92, 0.06) 5px 2px 9px 0px'
+                    scale,
+                    boxShadow: 'rgba(123, 94, 92, 0.1) 8px 4px 20px 0px'
                 }}
                 className={`relative w-full max-w-xl rounded-[40px] border-[9px] ${value.borderColor} bg-white p-12 text-center transition-transform hover:scale-[1.02]`}
             >

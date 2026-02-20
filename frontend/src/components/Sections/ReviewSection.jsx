@@ -145,7 +145,7 @@ export default function ReviewSection() {
                                             value={formData.name}
                                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                             className="w-full pl-12 pr-4 py-4 bg-site-bg/50 border border-site-fg/5 rounded-2xl focus:border-accent-orange outline-none transition-colors text-sm font-medium"
-                                            placeholder="John Doe"
+                                            placeholder="Your Name"
                                         />
                                     </div>
                                 </div>

@@ -49,6 +49,16 @@ const projects = [
         link: "https://the-cheelaya.onrender.com/",
         image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&q=80&w=1600",
         illustration: "https://cdn.prod.website-files.com/67079a31e71560a787d9fcc4/673cc0d68a1a1b4719476306_illustration-forcandidates.svg"
+    },
+    {
+        title: "FinologyX",
+        category: "Finance & Investment App",
+        image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=1600",
+        illustration: "https://cdn.prod.website-files.com/67079a31e71560a787d9fcc4/673cc0d695d81fca4e6b0b9e_illustration-forcompanies.svg",
+        links: [
+            { label: "Play Store", url: "https://play.google.com/store/apps/details?id=com.app.finologyx" },
+            { label: "App Store", url: "https://apps.apple.com/in/app/finologyx/id6747080164" }
+        ]
     }
 ];
 
@@ -88,11 +98,19 @@ export default function ProjectGrid() {
                                         {project.title}
                                     </h3>
                                 </div>
-                                
-                                <div className="flex gap-4">
-                                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="btn-primary">
-                                        Visit Site
-                                    </a>
+
+                                <div className="flex flex-wrap gap-4">
+                                    {project.links ? (
+                                        project.links.map((lnk, j) => (
+                                            <a key={j} href={lnk.url} target="_blank" rel="noopener noreferrer" className="btn-primary">
+                                                {lnk.label}
+                                            </a>
+                                        ))
+                                    ) : (
+                                        <a href={project.link} target="_blank" rel="noopener noreferrer" className="btn-primary">
+                                            Visit Site
+                                        </a>
+                                    )}
                                 </div>
                             </div>
                         </motion.div>

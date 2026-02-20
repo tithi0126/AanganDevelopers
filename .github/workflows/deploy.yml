@@ -62,7 +62,11 @@ jobs:
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: ${{ secrets.HOSTINGER_PORT || 22 }}
           script: |
+            set -e
             cd /home/ubuntu/Public/apps/AanganDevelopers/backend
-            npm ci --omit=dev
+            npm install --omit=dev
             pm2 restart aangan-backend || pm2 start server.js --name aangan-backend
             pm2 save
+            sleep 3
+            pm2 logs aangan-backend --lines 20 --nostream
+            curl -sf http://localhost:5001/api/health && echo "✅ Backend is healthy" || echo "❌ Backend health check failed"

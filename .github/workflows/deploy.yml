@@ -1,0 +1,68 @@
+name: Deploy AanganDevelopers to Hostinger VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ── Frontend ──────────────────────────────────────────────────────────
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+      # ── Deploy frontend dist ──────────────────────────────────────────────
+      - name: Copy frontend dist to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USERNAME }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: ${{ secrets.HOSTINGER_PORT || 22 }}
+          source: "frontend/dist"
+          target: "/home/ubuntu/Public/apps/AanganDevelopers"
+          strip_components: 1   # removes the leading "frontend/" from the path
+          rm: true
+
+      # ── Deploy backend ────────────────────────────────────────────────────
+      - name: Copy backend files to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USERNAME }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: ${{ secrets.HOSTINGER_PORT || 22 }}
+          source: "backend"
+          target: "/home/ubuntu/Public/apps/AanganDevelopers"
+          strip_components: 0
+          rm: false            # keep .env on the server; only overwrite source files
+
+      # ── Install backend deps & restart PM2 ───────────────────────────────
+      - name: Install backend dependencies & restart PM2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USERNAME }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: ${{ secrets.HOSTINGER_PORT || 22 }}
+          script: |
+            cd /home/ubuntu/Public/apps/AanganDevelopers/backend
+            npm ci --omit=dev
+            pm2 restart aangan-backend || pm2 start server.js --name aangan-backend
+            pm2 save

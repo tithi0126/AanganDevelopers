@@ -1,22 +1,27 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useSpring } from 'framer-motion';
 
 export default function CursorAura() {
-  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const mouseX = useSpring(0, { stiffness: 500, damping: 50 });
+  const mouseY = useSpring(0, { stiffness: 500, damping: 50 });
 
   useEffect(() => {
-    const move = (e) => {
-      setPos({ x: e.clientX, y: e.clientY });
+    const handleMouseMove = (e) => {
+      mouseX.set(e.clientX - 100);
+      mouseY.set(e.clientY - 100);
     };
-    window.addEventListener('pointermove', move);
-    return () => window.removeEventListener('pointermove', move);
-  }, []);
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [mouseX, mouseY]);
 
   return (
     <motion.div
-      className="pointer-events-none fixed z-10 h-44 w-44 rounded-full bg-gradient-to-tr from-amberSoft/15 to-indigoSoft/10 blur-3xl"
-      animate={{ x: pos.x - 96, y: pos.y - 96 }}
-      transition={{ type: 'spring', stiffness: 120, damping: 18, mass: 0.4 }}
+      style={{
+        x: mouseX,
+        y: mouseY,
+      }}
+      className="pointer-events-none fixed left-0 top-0 z-[100] h-48 w-48 rounded-full bg-gradient-to-tr from-accent-orange/10 to-accent-purple/10 blur-3xl"
     />
   );
 }

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, Send, User, MessageSquare, Check } from 'lucide-react';
 
-const API_BASE_URL = 'http://localhost:5001/api'; // Fallback for development
+const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL || 'https://aangandevelopers.com'}/api`;
 
 export default function ReviewSection() {
     const [reviews, setReviews] = useState([]);

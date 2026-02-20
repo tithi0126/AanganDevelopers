@@ -58,3 +58,4 @@ backend/temp/
 # Frontend specific
 frontend/.vite/
 frontend/dist/
+*.mov

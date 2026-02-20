@@ -71,7 +71,7 @@ export default function Values() {
                     />
                 </div>
 
-                <div className="relative h-[400vh]">
+                <div className="relative h-[250vh]">
                     {values.map((value, i) => (
                         <Card key={i} index={i} total={values.length} value={value} />
                     ))}

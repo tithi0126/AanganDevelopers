@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Menu, X, ArrowRight } from 'lucide-react';
 
 const sections = [
@@ -7,6 +7,7 @@ const sections = [
   { id: 'all-projects', label: 'Our Work' },
   { id: 'about', label: 'About' },
   { id: 'founder', label: 'Founder' },
+  { id: 'reviews', label: 'Reviews' },
   { id: 'contact', label: 'Contact' }
 ];
 
@@ -14,10 +15,20 @@ export default function NavBar() {
   const [activeSection, setActiveSection] = useState('home');
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const scrollLock = useRef(false);
+  const scrollLockTimer = useRef(null);
 
   const scrollTo = (id) => {
     const el = document.getElementById(id);
     if (el) {
+      // Lock scroll-listener updates so smooth scroll doesn't override this
+      scrollLock.current = true;
+      clearTimeout(scrollLockTimer.current);
+      scrollLockTimer.current = setTimeout(() => {
+        scrollLock.current = false;
+      }, 1000);
+
+      setActiveSection(id);
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       setMobileMenuOpen(false);
     }
@@ -27,11 +38,16 @@ export default function NavBar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
 
-      const sectionsElements = document.querySelectorAll('section[id]');
+      // Don't override activeSection while smooth-scrolling to a clicked section
+      if (scrollLock.current) return;
+
+      const navIds = sections.map(s => s.id);
+      const sectionsElements = Array.from(document.querySelectorAll('section[id], div[id]'))
+        .filter(el => navIds.includes(el.id));
       let current = 'home';
 
       sectionsElements.forEach(section => {
-        const sectionTop = section.offsetTop;
+        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
         if (window.scrollY >= sectionTop - 150) {
           current = section.id;
         }

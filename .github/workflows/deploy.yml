@@ -40,6 +40,17 @@ jobs:
           strip_components: 1   # removes the leading "frontend/" from the path
           rm: true
 
+      # ── Backup .env before deploy ─────────────────────────────────────────
+      - name: Backup .env on VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USERNAME }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: ${{ secrets.HOSTINGER_PORT || 22 }}
+          script: |
+            cp /home/ubuntu/Public/apps/AanganDevelopers/backend/.env /tmp/aangan-backend.env.bak 2>/dev/null || true
+
       # ── Deploy backend ────────────────────────────────────────────────────
       - name: Copy backend files to VPS
         uses: appleboy/scp-action@v0.1.7
@@ -51,10 +62,10 @@ jobs:
           source: "backend"
           target: "/home/ubuntu/Public/apps/AanganDevelopers"
           strip_components: 0
-          rm: false            # keep .env on the server; only overwrite source files
+          rm: false
 
-      # ── Install backend deps & restart PM2 ───────────────────────────────
-      - name: Install backend dependencies & restart PM2
+      # ── Restore .env, install deps & restart PM2 ─────────────────────────
+      - name: Restore .env, install deps & restart PM2
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
@@ -63,6 +74,8 @@ jobs:
           port: ${{ secrets.HOSTINGER_PORT || 22 }}
           script: |
             set -e
+            # Restore the backed-up .env (overwrites anything SCP may have copied)
+            cp /tmp/aangan-backend.env.bak /home/ubuntu/Public/apps/AanganDevelopers/backend/.env
             cd /home/ubuntu/Public/apps/AanganDevelopers/backend
             npm install --omit=dev
             pm2 restart aangan-backend || pm2 start server.js --name aangan-backend

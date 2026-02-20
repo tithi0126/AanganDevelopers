@@ -82,4 +82,5 @@ jobs:
             pm2 save
             sleep 3
             pm2 logs aangan-backend --lines 20 --nostream
-            curl -sf http://localhost:5001/api/health && echo "✅ Backend is healthy" || echo "❌ Backend health check failed"
+            BACKEND_PORT=$(grep -E '^PORT=' .env | cut -d= -f2 || echo 5001)
+            curl -sf http://localhost:${BACKEND_PORT}/api/health && echo "✅ Backend is healthy" || echo "❌ Backend health check failed"

@@ -5,24 +5,20 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif']
+        sans: ['Raleway', 'Inter', 'system-ui', 'sans-serif'],
+        serif: ['Instrument Serif', 'Tay Bea', 'serif']
       },
       colors: {
-        // Brand palette from user
-        darkBlue: '#222831', // #222831
-        lightBlueGrey: '#393E46', // #393E46
-        darkBeige: '#948979', // #948979
-        beige: '#DFD0B8', // #DFD0B8
-        // Existing accents
-        amberSoft: '#fbbf77',
-        indigoSoft: '#6366f1'
-      },
-      backgroundImage: {
-        'hero-gradient':
-          'radial-gradient(circle at top left, rgba(223, 208, 184, 0.35), transparent 55%), radial-gradient(circle at bottom right, rgba(57, 62, 70, 0.45), transparent 55%)'
+        'site-bg': 'var(--site-bg)',
+        'site-fg': 'var(--site-fg)',
+        accent: {
+          yellow: '#F0B420',
+          purple: '#B0A5F4',
+          orange: '#F36C5A',
+        }
       },
       boxShadow: {
-        glass: '0 18px 45px rgba(0,0,0,0.35)'
+        premium: '0 20px 50px rgba(30, 30, 30, 0.1)'
       }
     }
   },

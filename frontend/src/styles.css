@@ -1,22 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Raleway:wght@300;400;500;600;700&display=swap');
+
+@font-face {
+  font-family: 'Tay Bea';
+  src: url('https://cdn.prod.website-files.com/67079a31e71560a787d9fcc4/67079b35ca1818ca1f47d47a_TAYBea.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  scroll-behavior: smooth;
+:root {
+  --site-bg: #F9F2E9;
+  --site-fg: #1E1E1E;
+}
+
+@layer base {
+
+  html,
+  body {
+    scroll-behavior: smooth;
+    background-color: var(--site-bg);
+    color: var(--site-fg);
+    @apply antialiased selection:bg-accent-orange/20;
+  }
 }
 
 body {
-  @apply bg-slate-950 text-slate-50 font-sans antialiased;
+  font-family: 'Raleway', sans-serif;
+}
+
+.noise {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.05;
+  background-image: url('https://cdn.prod.website-files.com/67079a31e71560a787d9fcc4/6707b45e1c28f88fc781209a_noise.webp');
+  background-repeat: repeat;
+}
+
+.font-serif {
+  font-family: 'Tay Bea', serif;
+}
+
+.intro-img {
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.1));
+}
+
+.bus-dec1,
+.bus-dec2 {
+  mix-blend-mode: multiply;
+  filter: brightness(1.1);
 }
 
 .glass {
-  @apply bg-white/5 backdrop-blur-xl border border-white/10 shadow-glass;
+  @apply bg-white/10 backdrop-blur-xl border border-black/5 shadow-premium;
 }
 
 .nav-blur {
-  @apply bg-slate-950/60 backdrop-blur-xl border-b border-white/5;
+  @apply bg-[#F9F2E9]/80 backdrop-blur-xl border-b border-black/5;
 }
 
+.btn-primary {
+  @apply rounded-full bg-[#F0B420] px-8 py-3 text-sm font-bold text-white transition-all hover:brightness-110;
+  font-family: 'Raleway', sans-serif;
+}
 
+.btn-secondary {
+  @apply rounded-full border border-[#A79785] px-8 py-3 text-sm font-bold text-[#A79785] transition-all hover:bg-[#A79785]/10;
+  font-family: 'Raleway', sans-serif;
+}

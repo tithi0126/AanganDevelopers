@@ -13,6 +13,7 @@ import Values from './components/Sections/Values';
 import ProjectGrid from './components/Sections/ProjectGrid';
 import FounderSection from './components/Sections/FounderSection';
 import ReviewSection from './components/Sections/ReviewSection';
+import GlobalPresence from './components/Sections/GlobalPresence';
 import NotFound from './pages/NotFound';
 
 export default function App() {
@@ -69,6 +70,7 @@ function Home() {
       <section id="about" className="relative z-40 bg-site-bg">
         <About />
       </section>
+      <GlobalPresence />
       <ReviewSection />
       <div className="relative z-50 bg-site-bg">
         <FounderSection />

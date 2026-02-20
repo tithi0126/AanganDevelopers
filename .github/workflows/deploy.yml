@@ -40,17 +40,6 @@ jobs:
           strip_components: 1   # removes the leading "frontend/" from the path
           rm: true
 
-      # ── Backup .env before deploy ─────────────────────────────────────────
-      - name: Backup .env on VPS
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.HOSTINGER_HOST }}
-          username: ${{ secrets.HOSTINGER_USERNAME }}
-          key: ${{ secrets.HOSTINGER_SSH_KEY }}
-          port: ${{ secrets.HOSTINGER_PORT || 22 }}
-          script: |
-            cp /home/ubuntu/Public/apps/AanganDevelopers/backend/.env /tmp/aangan-backend.env.bak 2>/dev/null || true
-
       # ── Deploy backend ────────────────────────────────────────────────────
       - name: Copy backend files to VPS
         uses: appleboy/scp-action@v0.1.7
@@ -64,8 +53,8 @@ jobs:
           strip_components: 0
           rm: false
 
-      # ── Restore .env, install deps & restart PM2 ─────────────────────────
-      - name: Restore .env, install deps & restart PM2
+      # ── Write .env, install deps & restart PM2 ────────────────────────────
+      - name: Write .env, install deps & restart PM2
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
@@ -74,13 +63,16 @@ jobs:
           port: ${{ secrets.HOSTINGER_PORT || 22 }}
           script: |
             set -e
-            # Restore the backed-up .env (overwrites anything SCP may have copied)
-            cp /tmp/aangan-backend.env.bak /home/ubuntu/Public/apps/AanganDevelopers/backend/.env
             cd /home/ubuntu/Public/apps/AanganDevelopers/backend
+            # Write .env from GitHub secret (safe, never stored in repo)
+            printf '%s' "$AANGAN_BACKEND_ENV" > .env
             npm install --omit=dev
-            pm2 restart aangan-backend || pm2 start server.js --name aangan-backend
+            cd ~
+            pm2 restart aangan-backend || pm2 start /home/ubuntu/Public/apps/AanganDevelopers/backend/server.js --name aangan-backend
             pm2 save
             sleep 3
             pm2 logs aangan-backend --lines 20 --nostream
-            BACKEND_PORT=$(grep -E '^PORT=' .env | cut -d= -f2 || echo 5001)
+            BACKEND_PORT=$(grep -E '^PORT=' /home/ubuntu/Public/apps/AanganDevelopers/backend/.env | cut -d= -f2 || echo 5001)
             curl -sf http://localhost:${BACKEND_PORT}/api/health && echo "✅ Backend is healthy" || echo "❌ Backend health check failed"
+        env:
+          AANGAN_BACKEND_ENV: ${{ secrets.AANGAN_BACKEND_ENV }}

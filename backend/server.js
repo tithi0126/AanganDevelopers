@@ -3,20 +3,30 @@ import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
 import contactRouter from './src/routes/contact.js';
+import reviewRouter from './src/routes/review.js';
 
 dotenv.config();
 
 const allowedOrigins = [
-  'http://localhost:5173',  // Local development
-  'https://aangandevelopers.com',  // Your production domain
-  'https://www.aangandevelopers.com'  // Optional: with www
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:5000',
+  'https://aangandevelopers.com',
+  'https://www.aangandevelopers.com'
 ];
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://aangandevelopers.com'],
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1 || origin.startsWith('http://localhost:')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 
@@ -27,6 +37,7 @@ app.get('/api/health', (_req, res) => {
 });
 
 app.use('/api/contact', contactRouter);
+app.use('/api/reviews', reviewRouter);
 
 const mongoUri = process.env.MONGODB_URI;
 
@@ -38,7 +49,7 @@ mongoose
   .connect(mongoUri, { dbName: process.env.MONGODB_DB || 'aangan_developers' })
   .then(() => {
     console.log('Connected to MongoDB');
-    app.listen(port,'0.0.0.0',() => {
+    app.listen(port, '0.0.0.0', () => {
       console.log(`Server listening on port ${port}`);
     });
   })

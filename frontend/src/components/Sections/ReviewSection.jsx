@@ -1,14 +1,24 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Star, Send, User, MessageSquare, Check } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { Star, Send, User, MessageSquare, Check, Quote, ChevronDown, ChevronUp } from 'lucide-react';
 
 const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL || 'https://aangandevelopers.com'}/api`;
+const CHAR_LIMIT = 250;
 
 export default function ReviewSection() {
     const [reviews, setReviews] = useState([]);
     const [formData, setFormData] = useState({ name: '', rating: 5, comment: '' });
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
+    const [submitStatus, setSubmitStatus] = useState(null);
+
+    const sectionRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start end", "end start"]
+    });
+
+    const backgroundTextX = useTransform(scrollYProgress, [0, 1], [0, -400]);
+    const backgroundTextXReverse = useTransform(scrollYProgress, [0, 1], [-400, 0]);
 
     useEffect(() => {
         fetchReviews();
@@ -53,163 +63,243 @@ export default function ReviewSection() {
     };
 
     return (
-        <section id="reviews" className="relative z-20 py-32 px-6 bg-site-bg">
-            <div className="mx-auto max-w-6xl">
-                <div className="grid lg:grid-cols-2 gap-20">
-                    {/* Left Side: Reviews List */}
-                    <div className="space-y-12">
-                        <div className="space-y-6">
-                            <motion.p
-                                initial={{ opacity: 0 }}
-                                whileInView={{ opacity: 1 }}
-                                viewport={{ once: true }}
-                                className="text-[10px] font-bold uppercase tracking-[0.2em] text-site-fg/40"
-                            >
-                                Testimonials
-                            </motion.p>
-                            <h2 className="font-serif text-5xl md:text-7xl tracking-tight leading-[1.1]">
-                                What our <span className="italic text-accent-orange">Clients</span> say.
-                            </h2>
+        <section
+            id="reviews"
+            ref={sectionRef}
+            className="relative z-20 py-48 bg-site-bg overflow-hidden"
+        >
+            {/* Parallax Background Text */}
+            <div className="absolute top-1/4 left-0 w-full overflow-hidden pointer-events-none opacity-[0.03] select-none">
+                <motion.h2
+                    style={{ x: backgroundTextX }}
+                    className="font-serif text-[25vw] leading-none whitespace-nowrap uppercase italic text-site-fg"
+                >
+                    Testimonials Perspective Vision
+                </motion.h2>
+            </div>
+            <div className="absolute top-1/2 left-0 w-full overflow-hidden pointer-events-none opacity-[0.03] select-none">
+                <motion.h2
+                    style={{ x: backgroundTextXReverse }}
+                    className="font-serif text-[25vw] leading-none whitespace-nowrap uppercase text-site-fg"
+                >
+                    Excellence Quality Trust
+                </motion.h2>
+            </div>
+
+            {/* Atmospheric Orbs */}
+            <div className="absolute top-1/3 left-0 w-[800px] h-[800px] bg-accent-orange/10 rounded-full blur-[150px] -z-10 -translate-x-1/2" />
+            <div className="absolute bottom-1/3 right-0 w-[600px] h-[600px] bg-accent-purple/10 rounded-full blur-[120px] -z-10 translate-x-1/2" />
+
+            <div className="mx-auto max-w-7xl px-6 relative">
+                {/* Header Section */}
+                <div className="mb-32">
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="space-y-8"
+                    >
+                        <div className="flex items-center gap-6">
+                            <span className="w-12 h-[1px] bg-site-fg/20" />
+                            <p className="text-[10px] font-bold font-sans uppercase tracking-[0.4em] text-site-fg/40">
+                                Global Perspective
+                            </p>
                         </div>
+                        <h2 className="font-serif text-6xl md:text-9xl tracking-tighter leading-[0.9] text-site-fg">
+                            Client <span className="italic">Diaries</span>.
+                        </h2>
+                        <p className="max-w-xl text-lg text-site-fg/50 font-sans font-medium leading-relaxed">
+                            A curated ledger of experiences from our global partners, reflecting a shared commitment to visionary architecture.
+                        </p>
+                    </motion.div>
+                </div>
 
-                        <div className="space-y-8 max-h-[600px] overflow-y-auto pr-4 custom-scrollbar">
-                            {reviews.length === 0 ? (
-                                <p className="text-site-fg/30 italic">No reviews yet. Be the first to share your experience!</p>
-                            ) : (
-                                <AnimatePresence mode="popLayout">
-                                    {reviews.map((review, i) => {
-                                        const borderColors = ['border-[#F0B420]', 'border-[#B0A5F4]', 'border-[#F36C5A]'];
-                                        const rotations = [-2, 1.5, -1.2, 2.5, -0.5];
-                                        const borderColor = borderColors[i % borderColors.length];
-                                        const rotation = rotations[i % rotations.length];
-
-                                        return (
-                                            <motion.div
-                                                key={review._id || i}
-                                                initial={{ opacity: 0, scale: 0.8, y: 50 }}
-                                                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                                                viewport={{ once: true, margin: "-10%" }}
-                                                style={{
-                                                    rotate: rotation,
-                                                    boxShadow: 'rgba(123, 94, 92, 0.06) 5px 2px 9px 0px'
-                                                }}
-                                                className={`relative w-full rounded-[40px] border-[9px] ${borderColor} bg-white p-10 text-center transition-transform hover:scale-[1.02] space-y-6`}
-                                            >
-                                                <div className="flex flex-col items-center gap-6">
-                                                    <div className="flex gap-1 justify-center">
-                                                        {[...Array(5)].map((_, starIndex) => (
-                                                            <Star
-                                                                key={starIndex}
-                                                                size={16}
-                                                                className={starIndex < review.rating ? "fill-accent-orange text-accent-orange" : "text-site-fg/10"}
-                                                            />
-                                                        ))}
-                                                    </div>
-
-                                                    <div className="space-y-4">
-                                                        <h3 className="font-serif text-3xl md:text-4xl uppercase leading-tight tracking-tight">
-                                                            {review.name}
-                                                        </h3>
-                                                        <p className="text-lg font-medium leading-relaxed text-site-fg/80 max-w-md mx-auto">
-                                                            "{review.comment}"
-                                                        </p>
-                                                        <p className="text-[10px] font-bold uppercase tracking-widest text-site-fg/20">
-                                                            {new Date(review.createdAt).toLocaleDateString()}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </motion.div>
-                                        );
-                                    })}
-                                </AnimatePresence>
-                            )}
+                {/* Masonry Review Grid */}
+                <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8 mb-48">
+                    {reviews.length === 0 ? (
+                        <div className="col-span-full py-20">
+                            <p className="text-site-fg/30 italic text-xl font-serif">Awaiting new entries in the ledger...</p>
                         </div>
-                    </div>
+                    ) : (
+                        reviews.map((review, i) => (
+                            <EditorialReviewCard
+                                key={review._id || i}
+                                review={review}
+                                index={i}
+                            />
+                        ))
+                    )}
+                </div>
 
-                    {/* Right Side: Add Review Form */}
-                    <div className="relative">
-                        <div className="sticky top-32 p-10 border-2 border-site-fg/5 rounded-[40px] bg-white space-y-8 shadow-2xl shadow-site-fg/5">
-                            <div className="space-y-2">
-                                <h3 className="font-serif text-3xl uppercase">Share your experience</h3>
-                                <p className="text-sm text-site-fg/40">Your feedback helps us grow and serve you better.</p>
+                {/* Integrated Form Section */}
+                <div className="mt-64 relative">
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-px h-32 bg-gradient-to-b from-transparent via-site-fg/10 to-transparent" />
+
+                    <div className="max-w-5xl mx-auto">
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="bg-white/10 backdrop-blur-3xl border border-site-fg/5 rounded-[60px] p-12 md:p-24 overflow-hidden relative shadow-2xl shadow-site-fg/5"
+                        >
+                            {/* Decorative orb for form */}
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-accent-orange/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+
+                            {/* Form Header */}
+                            <div className="text-center space-y-6 mb-20 relative z-10">
+                                <h3 className="font-serif text-5xl md:text-7xl uppercase leading-none text-site-fg">
+                                    Contribute <span className="italic text-accent-orange">Today</span>
+                                </h3>
+                                <p className="text-site-fg/40 font-bold font-sans uppercase tracking-widest text-xs">
+                                    Join our narrative of excellence
+                                </p>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="space-y-6">
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-bold uppercase tracking-widest text-site-fg/40">Your Name</label>
-                                    <div className="relative">
-                                        <User className="absolute left-4 top-1/2 -translate-y-1/2 text-site-fg/20" size={18} />
+                            <form onSubmit={handleSubmit} className="space-y-12 max-w-3xl mx-auto relative z-10">
+                                <div className="grid md:grid-cols-2 gap-12">
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] font-bold font-sans uppercase tracking-[0.3em] text-site-fg/40 pl-1">Identity</label>
                                         <input
                                             type="text"
                                             required
                                             value={formData.name}
                                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                            className="w-full pl-12 pr-4 py-4 bg-site-bg/50 border border-site-fg/5 rounded-2xl focus:border-accent-orange outline-none transition-colors text-sm font-medium"
-                                            placeholder="Your Name"
+                                            className="w-full bg-transparent border-b border-site-fg/10 py-4 outline-none focus:border-accent-orange transition-colors font-serif text-2xl placeholder:text-site-fg/10 text-site-fg"
+                                            placeholder="Your name"
                                         />
                                     </div>
-                                </div>
-
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-bold uppercase tracking-widest text-site-fg/40">Rating</label>
-                                    <div className="flex gap-2">
-                                        {[1, 2, 3, 4, 5].map((star) => (
-                                            <button
-                                                key={star}
-                                                type="button"
-                                                onClick={() => setFormData({ ...formData, rating: star })}
-                                                className="transition-transform active:scale-90"
-                                            >
-                                                <Star
-                                                    size={24}
-                                                    className={star <= formData.rating ? "fill-accent-orange text-accent-orange" : "text-site-fg/10"}
-                                                />
-                                            </button>
-                                        ))}
+                                    <div className="space-y-4">
+                                        <label className="text-[10px] font-bold font-sans uppercase tracking-[0.3em] text-site-fg/40 pl-1">Merit</label>
+                                        <div className="flex items-center gap-4 py-4 border-b border-site-fg/10">
+                                            {[1, 2, 3, 4, 5].map((star) => (
+                                                <button
+                                                    key={star}
+                                                    type="button"
+                                                    onClick={() => setFormData({ ...formData, rating: star })}
+                                                    className="transition-transform hover:scale-125 focus:outline-none"
+                                                >
+                                                    <Star
+                                                        size={22}
+                                                        className={star <= formData.rating ? "fill-accent-orange text-accent-orange" : "text-site-fg/10"}
+                                                    />
+                                                </button>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-bold uppercase tracking-widest text-site-fg/40">Review</label>
-                                    <div className="relative">
-                                        <MessageSquare className="absolute left-4 top-4 text-site-fg/20" size={18} />
-                                        <textarea
-                                            required
-                                            rows={4}
-                                            value={formData.comment}
-                                            onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
-                                            className="w-full pl-12 pr-4 py-4 bg-site-bg/50 border border-site-fg/5 rounded-2xl focus:border-accent-orange outline-none transition-colors text-sm font-medium resize-none"
-                                            placeholder="Tell us about your project..."
-                                        />
-                                    </div>
+                                <div className="space-y-4">
+                                    <label className="text-[10px] font-bold font-sans uppercase tracking-[0.3em] text-site-fg/40 pl-1">Perspective</label>
+                                    <textarea
+                                        required
+                                        rows={4}
+                                        value={formData.comment}
+                                        onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
+                                        className="w-full bg-transparent border-b border-site-fg/10 py-4 outline-none focus:border-accent-orange transition-colors font-serif text-2xl placeholder:text-site-fg/10 resize-none text-site-fg"
+                                        placeholder="Share your thoughts..."
+                                    />
                                 </div>
 
-                                <button
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    className="w-full py-5 bg-site-fg text-site-bg rounded-2xl font-bold uppercase tracking-[0.2em] text-xs flex items-center justify-center gap-3 hover:bg-accent-orange transition-colors disabled:opacity-50"
-                                >
-                                    {isSubmitting ? 'Sending...' : (
-                                        <>
-                                            Submit Review <Send size={14} />
-                                        </>
-                                    )}
-                                </button>
-
-                                {submitStatus === 'success' && (
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        className="flex items-center gap-2 text-green-600 justify-center font-bold text-[10px] uppercase tracking-widest"
+                                <div className="flex flex-col items-center gap-8 pt-8">
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className="group relative px-12 py-6 bg-site-fg text-site-bg rounded-full overflow-hidden transition-all hover:bg-accent-orange hover:text-white hover:scale-105 active:scale-95 disabled:opacity-50"
                                     >
-                                        <Check size={14} /> Review submitted successfully!
-                                    </motion.div>
-                                )}
+                                        <span className="relative z-10 font-bold font-sans uppercase tracking-[0.4em] text-[10px] flex items-center gap-4">
+                                            {isSubmitting ? 'Architecting...' : 'Publish Entry'}
+                                            <Send size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                        </span>
+                                    </button>
+
+                                    <AnimatePresence>
+                                        {submitStatus === 'success' && (
+                                            <motion.p
+                                                initial={{ opacity: 0, y: 10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0 }}
+                                                className="text-green-600 font-bold font-sans text-[10px] uppercase tracking-[0.2em]"
+                                            >
+                                                Perspective archived successfully.
+                                            </motion.p>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
                             </form>
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
             </div>
         </section>
+    );
+}
+
+function EditorialReviewCard({ review, index }) {
+    const [isExpanded, setIsExpanded] = useState(false);
+    const isLong = review.comment.length > CHAR_LIMIT;
+    const displayText = isExpanded ? review.comment : review.comment.slice(0, CHAR_LIMIT) + (isLong ? '...' : '');
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-10%" }}
+            transition={{ duration: 0.8, delay: index % 3 * 0.1 }}
+            className="break-inside-avoid mb-8 group"
+        >
+            <div className={`relative p-10 md:p-14 bg-white/5 border border-site-fg/5 backdrop-blur-xl rounded-[48px] overflow-hidden transition-all duration-700 group-hover:bg-white/10 group-hover:border-site-fg/10 ${isExpanded ? 'shadow-2xl' : 'group-hover:-translate-y-2'}`}>
+                {/* Visual Accent */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-accent-orange/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+
+                {/* Quote Icon */}
+                <div className="mb-10 text-site-fg/5 group-hover:text-accent-orange/20 transition-colors duration-700">
+                    <Quote size={48} />
+                </div>
+
+                {/* Rating */}
+                <div className="flex gap-1 mb-8">
+                    {[...Array(5)].map((_, i) => (
+                        <Star
+                            key={i}
+                            size={12}
+                            className={i < review.rating ? "fill-accent-orange text-accent-orange" : "text-site-fg/5"}
+                        />
+                    ))}
+                </div>
+
+                {/* Content */}
+                <div className="space-y-8">
+                    <div className="relative">
+                        <p className="font-serif text-2xl md:text-3xl leading-[1.3] text-site-fg tracking-tight italic transition-all duration-500">
+                            "{displayText}"
+                        </p>
+                        {isLong && (
+                            <button
+                                onClick={() => setIsExpanded(!isExpanded)}
+                                className="mt-6 flex items-center gap-2 text-[10px] font-bold font-sans uppercase tracking-[0.2em] text-accent-orange/60 hover:text-accent-orange transition-colors"
+                            >
+                                {isExpanded ? (
+                                    <>Collapse <ChevronUp size={12} /></>
+                                ) : (
+                                    <>Read Full Perspective <ChevronDown size={12} /></>
+                                )}
+                            </button>
+                        )}
+                    </div>
+
+                    <footer className="pt-8 border-t border-site-fg/5 space-y-2">
+                        <cite className="not-italic font-bold font-sans uppercase tracking-[0.2em] text-[10px] text-site-fg/60 block">
+                            {review.name}
+                        </cite>
+                        <span className="text-[10px] font-medium font-sans uppercase tracking-[0.1em] text-site-fg/20 block">
+                            {new Date(review.createdAt).toLocaleDateString(undefined, {
+                                month: 'short',
+                                year: 'numeric'
+                            })}
+                        </span>
+                    </footer>
+                </div>
+            </div>
+        </motion.div>
     );
 }

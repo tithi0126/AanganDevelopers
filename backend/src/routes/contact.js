@@ -5,6 +5,7 @@ import { sendInquiryEmail } from '../utils/sendEmail.js';
 const router = express.Router();
 
 router.post('/', async (req, res) => {
+  console.log('Received inquiry request:', req.body);
   const { name, email, company, summary } = req.body || {};
 
   if (!name || !email || !summary) {
@@ -20,7 +21,7 @@ router.post('/', async (req, res) => {
     });
 
     // Fire and forget email; do not block response on email errors.
-    sendInquiryEmail({ name, email, company, summary }).catch((err) =>
+    sendInquiryEmail(req.body).catch((err) =>
       console.error('Email error', err)
     );
 

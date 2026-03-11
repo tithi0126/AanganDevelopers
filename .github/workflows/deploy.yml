@@ -39,6 +39,8 @@ jobs:
           target: "/home/ubuntu/Public/apps/AanganDevelopers"
           strip_components: 1   # removes the leading "frontend/" from the path
           rm: true
+          debug: true
+          timeout: 60s
 
       # ── Deploy backend ────────────────────────────────────────────────────
       - name: Copy backend files to VPS
@@ -52,6 +54,8 @@ jobs:
           target: "/home/ubuntu/Public/apps/AanganDevelopers"
           strip_components: 0
           rm: false
+          debug: true
+          timeout: 60s
 
       # ── Write .env, install deps & restart PM2 ────────────────────────────
       - name: Write .env, install deps & restart PM2
@@ -61,6 +65,7 @@ jobs:
           username: ${{ secrets.HOSTINGER_USERNAME }}
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: ${{ secrets.HOSTINGER_PORT || 22 }}
+          timeout: 60s
           script: |
             set -e
             cd /home/ubuntu/Public/apps/AanganDevelopers/backend

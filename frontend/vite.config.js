@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      "/api": "https://aangandevelopers.com/"
+      "/api": "http://localhost:5005"
     }
   }
 });

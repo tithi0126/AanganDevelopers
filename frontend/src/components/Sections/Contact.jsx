@@ -68,8 +68,8 @@ export default function Contact() {
               <ContactMethod
                 icon={<Mail size={20} />}
                 label="Email"
-                value="hello@aangandevelopers.com"
-                href="mailto:hello@aangandevelopers.com"
+                value="aangandeveloper@gmail.com"
+                href="mailto:aangandeveloper@gmail.com"
               />
               <ContactMethod
                 icon={<Phone size={20} />}

@@ -167,8 +167,8 @@ export default function NavBar() {
               <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-site-fg/40">
                 Get in touch
               </p>
-              <a href="mailto:hello@aangandevelopers.com" className="mt-4 block font-serif text-2xl italic text-site-fg underline decoration-accent-orange underline-offset-8">
-                hello@aangandevelopers.com
+              <a href="mailto:aangandeveloper@gmail.com" className="mt-4 block font-serif text-2xl italic text-site-fg underline decoration-accent-orange underline-offset-8">
+                aangandeveloper@gmail.com
               </a>
             </div>
           </motion.div>
